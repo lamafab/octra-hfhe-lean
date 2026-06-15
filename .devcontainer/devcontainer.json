@@ -1,0 +1,21 @@
+{
+    "name": "octra-hfhe-lean",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "leanprover.lean4"
+            ],
+            "settings": {
+                "lean4.serverEnv": {
+                    "PATH": "${containerEnv:PATH}"
+                }
+            }
+        }
+    },
+    "postCreateCommand": "bash .devcontainer/post-create.sh",
+    "remoteUser": "vscode"
+}
