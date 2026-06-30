@@ -171,13 +171,18 @@ Recovering the sparse selection `x` behind a decoy `σ` is a **syndrome‑decodi
   *unique* such solution (well‑posedness; from `eq_of_syndrome_eq_of_weight_le`, the
   classical `t = ⌊(d−1)/2⌋` unique‑decoding bound).
   - `H · x = H · x'  and both sparse  ⟹  x = x'`
-- **`decoyOf_shipped_selection_unique`**: the above at Octra's shipped radius `lpnNoise`.
-  - `same, with sparsity bound w = lpnNoise`
+- **`decoyOf_shipped_selection_unique`**: at Octra's shipped selection weight `xColWt` (= 128),
+  the `≤ xColWt`-sparse selection behind a noiseless decoy is unique, given `d ≥ 2·xColWt + 1`.
+  `xColWt` is a decoy/syndrome parameter, *not* the LPN PRF's `lpnNoise`.
+  - `H · x = H · x'  and  weight(x), weight(x') ≤ xColWt  ⟹  x = x'`
 
-The *average‑case hardness* (random k‑uniform hypergraphs at the MIPT density threshold;
-the LPN regime, [`Coding/LPN.lean`](Octra/Coding/LPN.lean): `LPNHard`, `lpn_hard`) is a
-**cited assumption**, never proved. Existence + uniqueness are geometry (proved here);
-hardness of *finding* is the axiom.
+> TODO: the uniqueness above is for the **noiseless** decoy (`e = 0`); the real
+> `σ = H · x + e` (error weight `errWt` = 128) needs `d ≥ 2·(xColWt + errWt) + 1`, and its
+> search/distinguishing hardness is unformalized. And the decoy's average‑case hardness
+> (random k‑uniform syndrome decoding at the MIPT threshold) is a **cited assumption**, distinct
+> from the LPN PRF axiom `lpn_hard` ([`Coding/LPN.lean`](Octra/Coding/LPN.lean)), which masks the
+> value channel, not the decoy. Existence + uniqueness are geometry (proved here); both hardness
+> questions are assumed.
 
 ### 2c. Merge: the one place the decoy is read
 
@@ -208,6 +213,10 @@ two would itself be syndrome decoding.
   - `the statement "LPN is hard at Octra's parameters"`
 - **`confidentiality_trusted`**: it holds by `Coding.lpn_hard`.
   - `confidentialityAssumption  ⟸  lpn_hard` (discharged from the axiom)
+
+> TODO: this names only the **LPN PRF** assumption (the value‑channel mask). The decoy's
+> syndrome‑decoding hardness (§2b) is a *separate* cited assumption that `Security.lean` does
+> not yet name, and there is no IND‑CPA reduction. Both are open items for the whitepaper.
 
 ---
 
