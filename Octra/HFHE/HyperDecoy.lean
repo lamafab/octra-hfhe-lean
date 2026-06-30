@@ -1,7 +1,6 @@
 import Octra.HFHE.Octra
 import Octra.Hypergraph.Incidence
 import Octra.Coding.Syndrome
-import Octra.Coding.LPN
 import Mathlib.Tactic
 
 -- ============================================================================
@@ -96,19 +95,40 @@ theorem decoyOf_zero_selection_unique {t : ℕ} {x₁ x₂ : H.VertIdx → ZMod 
   :=
     decoy_selection_unique H hmin hsol (decoyOf_zero_solves H x₁ t hx)
 
-/-- **Octra's shipped instance is well-posed.**  `decoyOf_zero_selection_unique` at the
-    concrete shipped radius `t := lpnNoise` (= `lpnSamples/8`, τ = 1/8, `Coding/LPN.lean`):
-    a `≤ lpnNoise`-sparse selection is THE unique one behind its noiseless decoy.  The only
-    remaining hypothesis is the minimum-distance bound `d ≥ 2·lpnNoise + 1` on the incidence
-    code, so confidentiality of an Octra decoy reduces to exactly that combinatorial fact
-    about `H` (the MIPT-threshold property; the cited assumption, see the file header).
-    Note this is well-posedness only: hardness of FINDING `x` is the separate `LPNHard`
-    axiom (`Coding/LPN.lean`), at this same `lpnNoise`. -/
+-- ----------------------------------------------------------------------------
+-- Octra's shipped decoy/syndrome parameters (C++ `types.hpp`)
+-- ----------------------------------------------------------------------------
+--
+-- These describe the decoy's syndrome-decoding instance over `H`. They are a separate
+-- parameter family from the LPN PRF (`Coding/LPN.lean`), which derives the value-channel
+-- mask, not the decoy.
+
+/-- Parity-check rows (C++ `m_bits`). -/
+def mBits  : ℕ := 8192
+/-- Parity-check columns (C++ `n_bits`). -/
+def nBits  : ℕ := 16384
+/-- Column weight of `H` (C++ `h_col_wt`). -/
+def hColWt : ℕ := 192
+/-- Selection weight: each decoy selects this many columns (C++ `x_col_wt`). This is the
+    sparsity bound on the selection `x` in the decoy's syndrome-decoding instance. -/
+def xColWt : ℕ := 128
+/-- Error weight: each decoy flips this many output bits (C++ `err_wt`); the noise `e` in
+    `σ = H·x + e`. Enters the noisy decoding question, not the noiseless lemma below. -/
+def errWt  : ℕ := 128
+
+/-- **The noiseless decoy's selection is unique** at the shipped selection weight
+    weight `xColWt`: if the incidence code has minimum distance `d ≥ 2·xColWt + 1`,
+    the `≤ xColWt`-sparse `x` behind `decoyOf x 0` is the only one.
+
+    TODO: this is the noiseless case `e = 0`; the real decoy `σ = H·x + e`
+    (error weight `errWt`) needs `d ≥ 2·(xColWt + errWt) + 1`, and hardness
+    of finding `x` is unformalized. And `xColWt` is a decoy parameter, not the
+    LPN PRF's `lpnNoise`. -/
 theorem decoyOf_shipped_selection_unique {x₁ x₂ : H.VertIdx → ZMod 2}
     (hmin : ∀ c ∈ code (H.incidence (ZMod 2)), c ≠ 0 →
-      2 * lpnNoise + 1 ≤ hammingWeight c)
-    (hx : hammingWeight x₁ ≤ lpnNoise)
-    (hsol : DecoyIsHardInstance H (decoyOf H x₁ 0) lpnNoise x₂)
+      2 * xColWt + 1 ≤ hammingWeight c)
+    (hx : hammingWeight x₁ ≤ xColWt)
+    (hsol : DecoyIsHardInstance H (decoyOf H x₁ 0) xColWt x₂)
   :
     x₂ = x₁
   :=
