@@ -58,10 +58,10 @@ theorem hammingWeight_sub_le {R : Type*} [AddGroup R] [DecidableEq R] [Decidable
     exact le_trans (hammingWeight_add_le x (-y)) (by rw [hammingWeight_neg])
 
 /-- `e` solves the syndrome-decoding instance `(H, σ, w)` when it has the right
-    syndrome and weight at most `w`.  Finding such `e` is the hard problem.
-    Octra instantiates this on the hypergraph incidence matrix
-    (`IsHypergraphDecodingSolution`, `Coding/Syndrome.lean`); the weight bound
-    `w` is the sparse-error rate (`lpnNoise`, τ = 1/8, `Coding/LPN.lean`). -/
+    syndrome and weight at most `w`. Finding such `e` is the hard problem. Octra
+    instantiates this on the hypergraph incidence matrix (`IsHypergraphDecodingSolution`,
+    `Coding/Syndrome.lean`); the weight bound `w` is the decoy's sparse-selection weight
+    (`xColWt`, `HFHE/HyperDecoy.lean`). -/
 def IsSyndromeDecodingSolution {R : Type*} [Semiring R] [DecidableEq R]
     (H : Matrix m n R) (σ : m → R) (w : ℕ) (e : n → R) : Prop
   :=

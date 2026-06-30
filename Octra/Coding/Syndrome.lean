@@ -29,8 +29,9 @@ theorem hypergraph_syndrome_eq (x : H.VertIdx → R) :
     whose hardness the random k-uniform hypergraph (Phase 1) is chosen to
     guarantee: k-uniformity makes the parity check `k`-regular
     (`row_weight_uniform`), the regime the MIPT-threshold hardness results
-    target.  The weight bound `w` is the sparse-error rate (`lpnNoise`, τ = 1/8,
-    `Coding/LPN.lean`). -/
+    target.  The weight bound `w` is the decoy's sparse-selection weight
+    (`xColWt`, `HFHE/HyperDecoy.lean`), distinct from the LPN PRF's `lpnNoise`.
+    -/
 def IsHypergraphDecodingSolution [DecidableEq R]
     (σ : H.EdgeIdx → R) (w : ℕ) (e : H.VertIdx → R) : Prop :=
   IsSyndromeDecodingSolution (H.incidence R) σ w e

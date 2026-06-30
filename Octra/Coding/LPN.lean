@@ -29,9 +29,10 @@ axiom LPNHard (n m w : ℕ) : Prop
 def lpnSecretBits : ℕ := 4096
 /-- LPN sample count `lpn_t` (C++ `types.hpp`). -/
 def lpnSamples    : ℕ := 16384
-/-- LPN noise weight `lpn_t · τ`, `τ = 1/8` (C++ `lpn_tau`): the same quantity as the
-    weight bound `w` of a syndrome-decoding instance (`IsSyndromeDecodingSolution`,
-    `Coding/LinearCode.lean`). -/
+/-- LPN PRF noise weight `lpn_t · τ`, `τ = 1/8` (C++ `lpn_tau`). This is the
+    noise of the LPN instance that derives the value-channel mask `R`. It is a
+    **separate** parameter family from the decoy's syndrome-decoding weights
+    (`xColWt`/`errWt`, `HFHE/HyperDecoy.lean`). -/
 def lpnNoise      : ℕ := lpnSamples / 8   -- 2048
 
 /-- We postulate LPN is hard at exactly those parameters: the single
