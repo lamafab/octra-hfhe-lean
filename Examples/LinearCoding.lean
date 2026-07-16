@@ -9,7 +9,7 @@ import Mathlib.Tactic
 -- `x` is `σ = H·x`, and `x` is a codeword iff `σ = 0`.  The hard problem Octra leans
 -- on is SYNDROME DECODING: given `H` and `σ`, find a LOW-WEIGHT `e` with `H·e = σ`.
 --
--- TODO: Clarify that "the gap is literally "any preimage (easy linear algebra) vs the
+-- TODO: Clarify that the gap is literally "any preimage (easy linear algebra) vs the
 -- sparse one (NP-hard)."
 --
 -- We run the abstract layer (`Coding/LinearCode.lean`) on the SAME 3×4 matrix as the

@@ -13,13 +13,14 @@ import Mathlib.Tactic
 --   * DECOY side (the hypergraph enters HERE): a column selection `xsel` over `H`,
 --     turned into a per-edge syndrome `decoyOf H xsel = H.incidence · xsel` (SPEC §4).
 --
--- Then `encryptH` glues the two into the public ciphertext.  The punchline: gluing
--- changes NOTHING the secret-key holder sees: decrypt still returns `v`, and the
--- attached decoy is exactly the hypergraph syndrome.  Decryption never reads a decoy,
--- so the value correctness and the hardness wiring stay completely separate.
+-- Then `encryptH` glues the two into the public ciphertext; combining changes
+-- NOTHING the secret-key holder sees: decrypt still returns `v`, and the
+-- attached decoy is exactly the hypergraph syndrome.  Decryption never reads a
+-- decoy, so the value correctness and the hardness wiring stay completely
+-- separate.
 --
--- (The cipher-level homomorphisms live in `Examples/Cipher.lean`; the abstract
--- decoy ↔ syndrome-decoding bridge is `Examples/LinearCoding.lean`.)
+-- The cipher-level homomorphisms live in `Examples/Cipher.lean`; the abstract
+-- decoy ↔ syndrome-decoding bridge is `Examples/LinearCoding.lean`.
 
 namespace Examples.Octra
 
