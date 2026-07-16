@@ -10,12 +10,12 @@
 
 ### The one idea
 
-Octra is an **exact** homomorphic encryption scheme over a finite field 𝔽ₚ
-(`p = 2¹²⁷ − 1`, the Mersenne prime, [`Field127.lean`](Octra/Field127.lean)).
-Unlike LWE/BGV‑style FHE, **there is no decryption noise**: decryption is an *identity*
-over 𝔽ₚ, and the scheme's "noise" tuples cancel exactly. Consequently there is **no noise
-budget** that correctness depends on: the only quantity that grows under evaluation is
-ciphertext **size** (edge count).
+Octra is an exact homomorphic encryption scheme over a finite field 𝔽ₚ (`p =
+2¹²⁷ − 1`, the Mersenne prime, [`Field127.lean`](Octra/Field127.lean)). Unlike
+LWE/BGV‑style FHE, **there is no decryption noise**: decryption is an identity
+over 𝔽ₚ, and the scheme's "noise" tuples cancel exactly. Consequently there is
+no noise budget that correctness depends on: the only quantity that grows under
+evaluation is ciphertext size (edge count).
 
 ### The two channels
 
