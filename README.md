@@ -16,3 +16,23 @@ lake build
 ```
 
 The Lean toolchain is pinned in `lean-toolchain`.
+
+## Infographs
+
+### Hypergraph
+
+A hypergraph is just a linear code, from which masks used for encryption are generated.
+
+![Octra hypergraph](assets/octra-hypergraph.png)
+
+### Encryption
+
+Encryption masks plaintext across edges, where the masks cancel exactly under decryption.
+
+![Octra encryption](assets/octra-encryption.png)
+
+### Operations
+
+Homomorphic operations act on the edges directly, growing ciphertext size (edge count).
+
+![Octra operations](assets/octra-operations.png)
